@@ -71,6 +71,25 @@ public class StatisticsControllerTests {
                 .andExpect(jsonPath("$.count", is(1)));
     }
 
+    @Test
+    public void twoTransactionsShouldAddUpProperly() throws Exception {
+        this.mockMvc.perform(post("/transactions").content(toJson(mockRecentTransaction()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isCreated());
+        this.mockMvc.perform(post("/transactions").content(toJson(mockRecentTransaction()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isCreated());
+        this.mockMvc.perform(post("/transactions").content(toJson(mockOldTransaction()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isNoContent());;
+
+        this.mockMvc.perform(get("/statistics"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.avg", is(22.5)))
+                .andExpect(jsonPath("$.count", is(2)))
+                .andExpect(jsonPath("$.sum", is(45.0)));
+
+    }
 
     private Transaction mockOldTransaction() {
         Transaction tx = new Transaction();

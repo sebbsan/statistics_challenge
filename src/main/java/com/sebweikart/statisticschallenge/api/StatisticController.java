@@ -2,7 +2,7 @@ package com.sebweikart.statisticschallenge.api;
 
 import com.sebweikart.statisticschallenge.domain.Statistic;
 import com.sebweikart.statisticschallenge.domain.Transaction;
-import com.sebweikart.statisticschallenge.service.TransactionService;
+import com.sebweikart.statisticschallenge.service.TransactionBufferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 public class StatisticController {
 
     @Autowired
-    private TransactionService transactionService;
+    private TransactionBufferService transactionService;
 
 
     @RequestMapping(value = "",
