@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class TransactionService {
+public class TransactionBufferService {
 
     private List<Transaction> transactionsBuffer = Collections.synchronizedList(new ArrayList<Transaction>());
 
